@@ -116,8 +116,8 @@ exports.updateMerchant = async (req, res, next)=>{
 // @access  Public
 exports.deleteMerchant = async (req, res, next)=>{
     try{
+        
         const merchant = await Merchant.findByPk(req.params.id);
-
         if(!merchant){
             return res.status(404).json({
                 success: false,

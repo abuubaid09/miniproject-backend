@@ -2,6 +2,7 @@ const bcrypt = require('bcrypt');
 const{DataTypes} = require('sequelize')
 
 const sequelize = require('../library/database');
+const Merchant = require('./merchantModel');
 
 const Product = sequelize.define('Product', {
     productId:{
@@ -22,5 +23,11 @@ const Product = sequelize.define('Product', {
         allowNull: false
     }
 });
+// Merchant.hasMany(Product, {
+//     foreignKey: 'merchantId',
+//   });
+
+// Merchant.hasMany(Product,{foreignKey: 'merchantId'});
+// Product.belongsTo(Merchant);
 
 module.exports = Product;

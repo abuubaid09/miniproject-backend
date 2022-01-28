@@ -1,4 +1,5 @@
 const Product = require('../models/productModel');
+const Merchant = require('../models/merchantModel');
 // @desc    Mengambil seluruh data product
 // @route   GET /product
 // @access  Public

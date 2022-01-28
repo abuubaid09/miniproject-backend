@@ -4,11 +4,6 @@ const{DataTypes} = require('sequelize')
 const sequelize = require('../library/database');
 
 const Merchant = sequelize.define('Merchant', {
-    merchantId:{
-        type: DataTypes.STRING,
-        primaryKey: true,
-        allowNull: false
-    },
     password:{
         type: DataTypes.STRING,
         allowNull: false
@@ -29,6 +24,8 @@ const Merchant = sequelize.define('Merchant', {
         type: DataTypes.STRING,
         allowNull: false
     }
+},{
+    freezeTableName:true
 });
 
 module.exports = Merchant;

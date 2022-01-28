@@ -1,4 +1,7 @@
 const Merchant = require('../models/merchantModel');
+const bcrypt = require("bcrypt");
+// import req from "express/lib/request";
+const jwt = require('jsonwebtoken');
 // @desc    Mengambil seluruh data merchant
 // @route   GET /merchant
 // @access  Public
@@ -21,14 +24,24 @@ exports.getAllMerchants = async (req, res, next)=>{
 // @desc    Menambahkan data merchant
 // @route   POST /merchant
 // @access  Public
-exports.createMerchant = async (req, res, next)=>{
+exports.register = async (req, res, next)=>{
+    const { merchantName, address, join_date, phone_number, password, confPassword } = req.body;
+    if(password !== confPassword) return res.status(400).json({message: "Password dan Confirm Password tidak cocok"});
+    const salt = await bcrypt.genSalt();
+    const hashPassword = await bcrypt.hash(password, salt);
     try{
-        const merchant = await Merchant.create(req.body);
-
+        // const merchant = await Merchant.create(req.body);
+        await Merchant.create({
+            password: hashPassword,
+            merchantName: merchantName,
+            address: address,
+            join_date: join_date,
+            phone_number: phone_number
+        });
         res.status(200).json({
             success: true,
-            message: "Data merchant berhasil ditambahkan",
-            data: merchant,
+            message: "Register berhasil",
+            // data: merchant,
         });
     }catch (error){
         res.status(400).json({

@@ -1,4 +1,5 @@
 const { verifyToken } = require("../middleware/VerifyToken.js");
+const{refreshToken} = require("../controllers/RefreshToken.js");
 const express = require('express');
 
 const router = express.Router();
@@ -17,6 +18,7 @@ const {
 router.post('/register', register);
 router.post('/login', login);
 router.put('/:id', updateMerchant)
-router.delete('/:id', deleteMerchant);
+router.delete('/:id', verifyToken,deleteMerchant);
+router.get('/token', refreshToken);
 
 module.exports = router;

@@ -91,6 +91,7 @@ exports.login = async(req, res, next) => {
 exports.updateMerchant = async (req, res, next)=>{
     try{
         const merchant = await Merchant.findByPk(req.params.id);
+        console.log(merchant);
         if(!merchant){
             return res.status(404).json({
                 success: false,

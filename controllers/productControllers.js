@@ -92,7 +92,7 @@ exports.deleteProduct = async (req, res, next)=>{
                 merchantId: req.params.id
             }
         });
-        console.log(product);
+        
         if(!product){
             return res.status(404).json({
                 success: false,

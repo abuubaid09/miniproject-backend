@@ -5,7 +5,11 @@ const Merchant = require('../models/merchantModel');
 // @access  Public
 exports.getAllProduct = async (req, res, next)=>{
     try{
-        const product = await Product.findAll();
+        const product = await Product.findAll({
+            where: {
+                merchantId: req.params.id
+            }
+        });
         res.status(200).json({
             success: true,
             message: "Data product berhasil diambil",
@@ -24,8 +28,15 @@ exports.getAllProduct = async (req, res, next)=>{
 // @access  Public
 exports.createProduct = async (req, res, next)=>{
     try{
-        const product = await Product.create(req.body);
+        const product = await Product.create({
+            productId: req.body.productId,
+            productName: req.body.productName,
+            price: req.body.price,
+            quantity: req.body.quantity,
+            merchantId: req.params.id
+        });
 
+        console.log(req.params.id);
         res.status(200).json({
             success: true,
             message: "Data product berhasil ditambahkan",
@@ -41,37 +52,16 @@ exports.createProduct = async (req, res, next)=>{
 }
 
 
-// @desc    Melihat data satu product
-// @route   PUT /product
-// @access  Public
-exports.getProduct = async (req, res, next)=>{
-    try{
-        const product = await Product.findByPk(req.params.id);
-        if(!merchant){
-            return res.status(404).json({
-                success: false,
-                message: "Data product tidak ditemukan"
-            });
-        }
-        res.status(200).json({
-            success: true,
-            message: `Data product berhasil diambil`,
-            data: product
-        })
-    }catch (error){
-        res.status(500).json({
-            success: false,
-            message: "Something went wrong",
-        });
-    }
-}
-
 // @desc    Edit data product
 // @route   PUT /product
 // @access  Public
 exports.updateProduct = async (req, res, next)=>{
     try{
-        const product = await Product.findByPk(req.params.id);
+        const product = await Product.findByPk(req.params.productId,{
+            where:{
+                merchantId: req.params.id
+            }
+        });
         if(!product){
             return res.status(404).json({
                 success: false,
@@ -97,8 +87,12 @@ exports.updateProduct = async (req, res, next)=>{
 // @access  Public
 exports.deleteProduct = async (req, res, next)=>{
     try{
-        const product = await Product.findByPk(req.params.id);
-
+        const product = await Product.findByPk(req.params.productId,{
+            where:{
+                merchantId: req.params.id
+            }
+        });
+        console.log(product);
         if(!product){
             return res.status(404).json({
                 success: false,

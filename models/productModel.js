@@ -26,8 +26,8 @@ const Product = sequelize.define('Product', {
 // Merchant.hasMany(Product, {
 //     foreignKey: 'merchantId',
 //   });
-
-// Merchant.hasMany(Product,{foreignKey: 'merchantId'});
+ 
+Merchant.hasMany(Product,{foreignKey: 'merchantId'});
 // Product.belongsTo(Merchant);
 
 module.exports = Product;
